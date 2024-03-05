@@ -11,3 +11,141 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media screen and (min-width: 400px) {
+  
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(black, white);
+  }
+
+  .clock {
+    height: 90vh;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background: black;
+    border-radius: 30px;
+    box-shadow: 15px 15px 80px rgba(66, 66, 66, 0.5), -15px -15px 80px rgba(66, 66, 66, 0.5);
+  }
+
+  .name {
+    color: white;
+    margin: 0;
+  }
+
+  .timer {
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 15px 15px 80px rgba(66, 66, 66, 0.5), -15px -15px 80px rgba(66, 66, 66, 0.5);
+    position: relative;
+  }
+
+  .animation, .anima {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    position: absolute;
+    transform:rotate(45deg);
+    content: "";
+    box-sizing: border-box;
+    inset: 0px;
+    border: 3px solid white;
+    animation: timer 60s infinite linear;
+    animation-play-state: paused;
+  }
+
+  .anima {
+    animation: timer linear reverse;
+    border: none;
+  }
+
+  @keyframes timer {
+    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+  }
+
+  .start {
+    animation-play-state: running;
+  }
+
+  .reset {
+    animation: none;
+    border: none;
+  }
+
+  .count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-size: 40px;
+    z-index: 2;
+  }
+
+  .count input {
+    width: 60px;
+    font-size: 40px;
+    text-align: center;
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .count input.slider {
+    width: 100%;
+    accent-color: white;
+  }
+
+  .time {
+    color: white;
+    font-size: 40px;
+  }
+
+  .buttons {
+    width: 96%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .button {
+    height: 60px;
+    width: 120px;
+    color: white;
+    font-size: 30px;
+    background: none;
+    border: 1px solid white;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    box-shadow: inset 3px 3px 25px rgba(232, 232, 232, 0.4), inset -3px -3px 25px rgba(232, 232, 232, 0.4);
+  }
+
+}
+
+@media screen and (min-width: 810px) {
+  .container {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
