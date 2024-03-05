@@ -8,10 +8,11 @@ export default function CountDown() {
     let [s, setS] = useState('00');
     let [slider, setSlider] = useState('00');
     const [play, {stop}] = useSound(tada);
-    let [disabled, isDisabled] = useState(false);
 
     let [time, setTime] = useState(slider);
     let [isStarted, setIsStarted] = useState(false);
+    let [isCount, setIsCount] = useState(true);
+    let [isCounting, setIsCounting] = useState(false);
 
     let timeLeft = {
         hour : ('0' + Math.floor(time / 3600) % 24).slice(-2),
@@ -22,14 +23,21 @@ export default function CountDown() {
     useEffect(() => {
         const interval = setInterval(() => {
             isStarted && setTime((time) => (time >= 1 ? time - 1 : 0))
-            if (time === 0) setIsStarted(false); 
+            if (time === 0) { 
+                setIsCounting(false);
+                let anima = document.querySelector('.anima');
+                anima.style.border = 'none';
+                anima.classList.add('reset');
+                anima.classList.remove('start');
+                setIsStarted(false); 
+            }
             if (time === 1) play(); 
         }, 1000)
 
         return () => {
             clearInterval(interval);
             if (time === 0) {
-                stop(); 
+                stop();
             }
         }
     }, [time, isStarted, play, stop]);
@@ -37,18 +45,19 @@ export default function CountDown() {
     let sAnima = +h * 3600 + +m * 60 + +s;
 
     const startCountdown = () => {
-        if (time === 0) play();
+        setIsCounting(true);
+        setIsStarted(true);
+        isCount && setTime(slider);
         let anima = document.querySelector('.anima');
         anima.style.animationDuration = `${sAnima}s`;
         anima.style.border = '3px solid white';
         anima.style.animationPlayState = 'running';
         anima.classList.remove('reset');
         anima.classList.add('start');
-        setIsStarted(true);
-        isDisabled(true);
     };
 
     const stopCountdown = () => {
+        setIsCount(false);
         let anima = document.querySelector('.anima');
         anima.style.animationPlayState = 'paused';
         anima.classList.remove('reset');
@@ -57,32 +66,33 @@ export default function CountDown() {
     };
 
     const resetCountdown = () => {
+        setIsCount(true);
         let anima = document.querySelector('.anima');
         anima.style.border = 'none';
         anima.classList.add('reset');
         anima.classList.remove('start');
         setIsStarted(false);
         setTime(slider);
-        isDisabled(false);
+        setIsCounting(false);
     };
 
     const handleHourChange = (event) => {
         let value = event.target.value;
-        setH(value);
+        setH(('0' + value % 60).slice(-2));
         setSlider(+value * 3600 + +m * 60 + +s);
         resetCountdown()
     };
 
     const handleMinChange = (event) => {
         let value = event.target.value;
-        setM(value);
+        setM(('0' + value % 60).slice(-2));
         setSlider(+h * 3600 + +value * 60 + +s);
         resetCountdown()
     };
 
     const handleSecChange = (event) => {
         let value = event.target.value;
-        setS(value);
+        setS(('0' + value % 60).slice(-2));
         setSlider(+h * 3600 + +m * 60 + +value);
         resetCountdown()
     };
@@ -99,19 +109,25 @@ export default function CountDown() {
     return <div className="clock">
         <h1 className="name">Countdown</h1>
         <div className="timer">
-            <form className="count">
-                <div>
-                    <input className="hours" type='number' disabled = {disabled ? "disabled" : ""}
-                        maxLength="2" min="0" max="24" onChange={handleHourChange} value={h}/>:
-                    <input className="minutes" type='number' disabled = {disabled ? "disabled" : ""}
-                        maxLength="2" min="0" max="60" onChange={handleMinChange} value={m}/>:
-                    <input className="seconds" type='number' disabled = {disabled ? "disabled" : ""}
-                        maxLength="2" min="0" max="60" onChange={handleSecChange} value={s}/>
+            {isCounting ? (
+                <div className="count">
+                    <div className="time">{timeLeft.hour}:{timeLeft.min}:{timeLeft.sec}</div>
+                    <div className='total'>Total {h}:{m}:{s}</div>
                 </div>
-                <input className="slider" type="range" disabled = {disabled ? "disabled" : ""}
-                    min="0" max="86400" onChange={handleSliderChange} value={slider}/>
-            </form>
-            <div className="time">{timeLeft.hour}:{timeLeft.min}:{timeLeft.sec}</div>
+            ) : (
+                <form className="count">
+                    <div>
+                        <input className="hours" type='number' 
+                            maxLength="2" min="0" max="24" onChange={handleHourChange} value={h}/>:
+                        <input className="minutes" type='number' 
+                            maxLength="2" min="0" max="59" onChange={handleMinChange} value={m}/>:
+                        <input className="seconds" type='number' 
+                            maxLength="2" min="0" max="59" onChange={handleSecChange} value={s}/>
+                    </div>
+                    <input className="slider" type="range" 
+                        min="0" max="86400" onChange={handleSliderChange} value={slider}/>
+                </form>
+            )}
             <div className="anima"></div>
         </div>
         <div className="buttons">

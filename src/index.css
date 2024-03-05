@@ -119,6 +119,11 @@ code {
     font-size: 40px;
   }
 
+  .total {
+    color: white;
+    font-size: 14px;
+  }
+
   .buttons {
     width: 96%;
     display: flex;
