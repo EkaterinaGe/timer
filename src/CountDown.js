@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import tada from './ta-da.mp3';
+import Input from './Input';
 
 export default function CountDown() {
+    const [play, {stop}] = useSound(tada);
     let [h, setH] = useState('00');
     let [m, setM] = useState('00');
     let [s, setS] = useState('00');
     let [slider, setSlider] = useState('00');
-    const [play, {stop}] = useSound(tada);
-
-    let [time, setTime] = useState(slider);
+    let sAnima = +h * 3600 + +m * 60 + +s;
+    let [time, setTime] = useState(sAnima);
     let [isStarted, setIsStarted] = useState(false);
     let [isCount, setIsCount] = useState(true);
     let [isCounting, setIsCounting] = useState(false);
@@ -19,6 +20,7 @@ export default function CountDown() {
         min : ('0' + Math.floor(time / 60) % 60).slice(-2),
         sec : ('0' + time % 60).slice(-2)
     }
+    if (time === '86400') timeLeft.hour = 24;
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -42,12 +44,10 @@ export default function CountDown() {
         }
     }, [time, isStarted, play, stop]);
 
-    let sAnima = +h * 3600 + +m * 60 + +s;
-
     const startCountdown = () => {
         setIsCounting(true);
         setIsStarted(true);
-        isCount && setTime(slider);
+        isCount && setTime(sAnima);
         let anima = document.querySelector('.anima');
         anima.style.animationDuration = `${sAnima}s`;
         anima.style.border = '3px solid white';
@@ -72,38 +72,8 @@ export default function CountDown() {
         anima.classList.add('reset');
         anima.classList.remove('start');
         setIsStarted(false);
-        setTime(slider);
+        setTime(sAnima);
         setIsCounting(false);
-    };
-
-    const handleHourChange = (event) => {
-        let value = event.target.value;
-        setH(('0' + value % 60).slice(-2));
-        setSlider(+value * 3600 + +m * 60 + +s);
-        resetCountdown()
-    };
-
-    const handleMinChange = (event) => {
-        let value = event.target.value;
-        setM(('0' + value % 60).slice(-2));
-        setSlider(+h * 3600 + +value * 60 + +s);
-        resetCountdown()
-    };
-
-    const handleSecChange = (event) => {
-        let value = event.target.value;
-        setS(('0' + value % 60).slice(-2));
-        setSlider(+h * 3600 + +m * 60 + +value);
-        resetCountdown()
-    };
-
-    const handleSliderChange = (event) => {
-        let value = event.target.value;
-        setSlider(value);
-        setS(value % 60);
-        setM(Math.floor(value / 60) % 60);
-        setH(Math.floor(value / 3600) % 24);
-        resetCountdown()
     };
 
     return <div className="clock">
@@ -115,18 +85,16 @@ export default function CountDown() {
                     <div className='total'>Total {h}:{m}:{s}</div>
                 </div>
             ) : (
-                <form className="count">
-                    <div>
-                        <input className="hours" type='number' 
-                            maxLength="2" min="0" max="24" onChange={handleHourChange} value={h}/>:
-                        <input className="minutes" type='number' 
-                            maxLength="2" min="0" max="59" onChange={handleMinChange} value={m}/>:
-                        <input className="seconds" type='number' 
-                            maxLength="2" min="0" max="59" onChange={handleSecChange} value={s}/>
-                    </div>
-                    <input className="slider" type="range" 
-                        min="0" max="86400" onChange={handleSliderChange} value={slider}/>
-                </form>
+                <Input
+                    h={h}
+                    m={m}
+                    s={s}
+                    slider={slider}
+                    setH={setH}
+                    setM={setM}
+                    setS={setS}
+                    setSlider={setSlider}
+                />
             )}
             <div className="anima"></div>
         </div>
