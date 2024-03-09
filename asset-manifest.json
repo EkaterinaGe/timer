@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.de411243.css",
-    "main.js": "/react-gh-pages/static/js/main.ec2e5a29.js",
-    "static/js/885.1c3a99f8.chunk.js": "/react-gh-pages/static/js/885.1c3a99f8.chunk.js",
-    "static/media/ta-da.mp3": "/react-gh-pages/static/media/ta-da.dc5c87c7c12c12efccd2.mp3",
-    "index.html": "/react-gh-pages/index.html",
-    "main.de411243.css.map": "/react-gh-pages/static/css/main.de411243.css.map",
-    "main.ec2e5a29.js.map": "/react-gh-pages/static/js/main.ec2e5a29.js.map",
-    "885.1c3a99f8.chunk.js.map": "/react-gh-pages/static/js/885.1c3a99f8.chunk.js.map"
+    "main.css": "/timer/static/css/main.de411243.css",
+    "main.js": "/timer/static/js/main.760f5457.js",
+    "static/js/885.1c3a99f8.chunk.js": "/timer/static/js/885.1c3a99f8.chunk.js",
+    "static/media/ta-da.mp3": "/timer/static/media/ta-da.dc5c87c7c12c12efccd2.mp3",
+    "index.html": "/timer/index.html",
+    "main.de411243.css.map": "/timer/static/css/main.de411243.css.map",
+    "main.760f5457.js.map": "/timer/static/js/main.760f5457.js.map",
+    "885.1c3a99f8.chunk.js.map": "/timer/static/js/885.1c3a99f8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.de411243.css",
-    "static/js/main.ec2e5a29.js"
+    "static/js/main.760f5457.js"
   ]
 }
