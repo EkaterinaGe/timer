@@ -13,13 +13,14 @@ export default function Input({ h, m, s, slider, setH, setM, setS, setSlider }) 
             setSlider(+h * 3600 + value * 60 + +s);
         } else if (name === 'seconds') {
             setS(('0' + value % 60).slice(-2));
-            setSlider(+h * 3600 + +m * 60 + value);
+            setSlider(+h * 3600 + +m * 60 + +value);
         } else if (name === 'slider') {
             setSlider(value);
             setH(('0' + Math.floor(value / 3600) % 24).slice(-2));
             setM(('0' + Math.floor(value / 60) % 60).slice(-2));
             setS(('0' + value % 60).slice(-2));
         }
+        console.log(slider)
     };
 
     return (

@@ -25,7 +25,7 @@ code {
   }
 
   .clock {
-    height: 90vh;
+    height: 600px;
     width: 400px;
     display: flex;
     flex-direction: column;
