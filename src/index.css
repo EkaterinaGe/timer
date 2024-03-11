@@ -67,10 +67,10 @@ code {
     animation-play-state: paused;
   }
 
-  .anima {
+  /* .anima {
     animation: timer linear reverse;
     border: none;
-  }
+  } */
 
   @keyframes timer {
     0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
